@@ -5,3 +5,6 @@ in the second column (see input_example.tsv). Retrieved information is written t
 
 ## Setup
 Please enter your Entrez email adress and filename in the script.
+
+## Usage
+´python3 entrez-ncbi-scraper.py´
