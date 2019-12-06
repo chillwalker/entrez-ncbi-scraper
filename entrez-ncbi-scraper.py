@@ -38,10 +38,34 @@ with open("output.tsv", mode="w") as out:
 			tmp = tmp + line
 
 		# Search info
-		m = re.search('(?:\/collection date=\")(\d+)[\s\S]*(?:\/geographic location=\")([a-zA-Z\s]*)[\s\S]*(?:\/host=\")([a-zA-Z\s]*)', tmp)	
+		#m = re.search('(?:\/collection date=\")(\d+)[\s\S]*(?:\/geographic location=\")([a-zA-Z\s]*)[\s\S]*(?:\/host=\")([a-zA-Z\s]*)', tmp)	
+
+		date = re.search('(?:\/collection date=\")(\d+)')
+		location = re.search('(?:\/geographic location=\")([a-zA-Z\s]*)')
+		host = re.search('(?:\/host=\")([a-zA-Z\s]*)')
+		
+		bla = ""
+		if date:
+			bla = bla + date.group(0) + "\t" 
+		else:
+			bla = bla + "missing" + "\t"
+		
+		if location:
+		        bla = bla + location.group(0) + "\t"
+                else:
+                        bla = bla + "missing" + "\t"
+
+		if host:
+                        bla = bla + host.group(0) + "\t"
+                else:
+                        bla = bla + "missing" + "\t"
+
+		bla = bla + "\n"
 
 		# Save to file
-		# Todo: check for specific capturing groups
+		out.write(bla)
+		
+		'''
 		if m:
 			print("Writing info --- Date: %s, Location: %s, Host: %s" % (m.group(1), m.group(2), m.group(3)))
 			out.write(id[1] + "\t" + m.group(1) + "\t" + m.group(2) + "\t" + m.group(3) + "\n")
@@ -50,6 +74,8 @@ with open("output.tsv", mode="w") as out:
 			print("Did not find any info")
 			out.write(id[1] + "\t missing \t missing \t missing")
 			info_fail = info_fail + 1
+		'''
+		
 		handle.close()
 
 print("There were %d ids where information could be retrieved and %d ids with missing information" % (info_success, info_fail))
